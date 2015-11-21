@@ -50,56 +50,58 @@ namespace L5KDescExtractor
         {
             if (f1 != null)
             {
-                f1.XmlFile.Save("CT_319102_after.L5X");
+                //f1.XmlFile.Save("CT_319102_after.L5X");
             }
         }
 
         private void acceptFromBaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DataGridView dgv = null;
             switch (tabControl1.SelectedIndex)
             {
                 case 0:
-                    dgv = dgv_rungs;
+                    foreach (DataGridViewRow item in dgv_rungs.SelectedRows)
+                    {
+                        var pair = rungs[item.Index];
+                        pair.Selection = 1;
+                    }
+                    src_rungs.ResetBindings(false);
                     break;
                 case 1:
-                    dgv = dgv_tags;
+                    foreach (DataGridViewRow item in dgv_tags.SelectedRows)
+                    {
+                        var pair = tags[item.Index];
+                        pair.Selection = 1;
+                    }
+                    src_tags.ResetBindings(false);
                     break;
                 default:
                     throw new Exception("Unexpected selection!");
             }
-            foreach (DataGridViewRow item in dgv.SelectedRows)
-            {
-                var pair = rungs[item.Index];
-                pair.Selection = 1;
-            }
-            src_rungs.ResetBindings(false);
-            src_tags.ResetBindings(false);
-            //var list = dgv.DataSource;
-            //dgv.DataSource = null;
-            //dgv.DataSource = list;
         }
 
         private void acceptFromCompareToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DataGridView dgv = null;
             switch (tabControl1.SelectedIndex)
             {
                 case 0:
-                    dgv = dgv_rungs;
+                    foreach (DataGridViewRow item in dgv_rungs.SelectedRows)
+                    {
+                        var pair = rungs[item.Index];
+                        pair.Selection = 2;
+                    }
+                    src_rungs.ResetBindings(false);
                     break;
                 case 1:
-                    dgv = dgv_tags;
+                    foreach (DataGridViewRow item in dgv_tags.SelectedRows)
+                    {
+                        var pair = tags[item.Index];
+                        pair.Selection = 2;
+                    }
+                    src_tags.ResetBindings(false);
                     break;
                 default:
                     throw new Exception("Unexpected selection!");
             }
-            foreach (DataGridViewRow item in dgv.SelectedRows)
-            {
-                var pair = (L5XPair)item.DataBoundItem;
-                pair.Selection = 2;
-            }
-            dgv.Refresh();
         }
     }
 }

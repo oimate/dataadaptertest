@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace L5KDescExtractor
 {
-    public struct L5XPair
+    public class L5XPair
     {
         public L5XPair(XElement element, XElement basefiledesc, XElement comparefiledesc)
         {
