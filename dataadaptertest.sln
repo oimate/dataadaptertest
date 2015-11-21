@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oiajf", "L5KDescExtractor\o
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bccxor", "bccxor\bccxor.csproj", "{6122F76E-4D80-481B-9625-3486ECF5094F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oiajf_gui", "oiajf_gui\oiajf_gui.csproj", "{F00573A3-167E-461D-8709-420BE0EEBA28}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{6122F76E-4D80-481B-9625-3486ECF5094F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6122F76E-4D80-481B-9625-3486ECF5094F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6122F76E-4D80-481B-9625-3486ECF5094F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F00573A3-167E-461D-8709-420BE0EEBA28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F00573A3-167E-461D-8709-420BE0EEBA28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F00573A3-167E-461D-8709-420BE0EEBA28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F00573A3-167E-461D-8709-420BE0EEBA28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
