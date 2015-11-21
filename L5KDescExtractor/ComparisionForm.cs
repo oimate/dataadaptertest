@@ -13,50 +13,93 @@ namespace L5KDescExtractor
 {
     public partial class ComparisionForm : Form
     {
-        private List<XElement> tags_with_desc_2;
-        public List<XElement> Tags_with_desc_2
-        {
-            get
-            {
-                if (tags_with_desc_2 == null) tags_with_desc_2 = new List<XElement>();
-                return tags_with_desc_2;
-            }
-        }
-
-        List<string> log = new List<string>();
-        void Log(string msg)
-        {
-            var line = string.Format("{0}\t{1}", DateTime.Now.ToString("yyyy-MM-dd hh-mm-ss"), msg);
-            log.Add(line);
-            using (var sw = System.IO.File.AppendText("log.txt"))
-            {
-                sw.WriteLine(line);
-            }
-        }
-
         public ComparisionForm()
         {
             InitializeComponent();
         }
 
+        L5XFile f1, f2;
+        List<L5XPair> rungs, tags;
+        BindingSource src_rungs, src_tags;
         async private void button1_Click(object sender, EventArgs e)
         {
-            var f1 = new L5XFile(@"f:\users\PLRADSLI\Documents\Work\PROJECTS\ford kentucky\_SW\CT_319102.L5X");
-            var f2 = new L5XFile(@"f:\users\PLRADSLI\Documents\Work\PROJECTS\ford kentucky\_SW\CT_319102_spioch.L5X");
+            f1 = new L5XFile(@"f:\users\PLRADSLI\Documents\Work\PROJECTS\ford kentucky\_SW\CT_319102.L5X");
+            f2 = new L5XFile(@"f:\users\PLRADSLI\Documents\Work\PROJECTS\ford kentucky\_SW\CT_319102_spioch.L5X");
 
             var compare = new L5XComparer(f1, f2);
-            List<L5XPair> rungs = await Task.Run<List<L5XPair>>(() => { return compare.GetRungs(); });
-            List<L5XPair> tags = await Task.Run<List<L5XPair>>(() => { return compare.GetTags(); });
+            rungs = await Task.Run<List<L5XPair>>(() => { return compare.GetRungs(); });
+            tags = await Task.Run<List<L5XPair>>(() => { return compare.GetTags(); });
 
             System.IO.File.WriteAllLines("runglog.txt", compare.LogRungs.ToArray());
             System.IO.File.WriteAllLines("taglog.txt", compare.LogTags.ToArray());
 
             MessageBox.Show("Done!");
 
-            dgv_rungs.DataSource = rungs;
-            dgv_tags.DataSource = tags;
+            src_rungs = new BindingSource();
+            src_rungs.DataSource = rungs;
+            dgv_rungs.DataSource = src_rungs;
+
+            src_tags = new BindingSource();
+            src_tags.DataSource = tags;
+            dgv_tags.DataSource = src_tags;
 
             //System.Diagnostics.Debugger.Break();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (f1 != null)
+            {
+                f1.XmlFile.Save("CT_319102_after.L5X");
+            }
+        }
+
+        private void acceptFromBaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DataGridView dgv = null;
+            switch (tabControl1.SelectedIndex)
+            {
+                case 0:
+                    dgv = dgv_rungs;
+                    break;
+                case 1:
+                    dgv = dgv_tags;
+                    break;
+                default:
+                    throw new Exception("Unexpected selection!");
+            }
+            foreach (DataGridViewRow item in dgv.SelectedRows)
+            {
+                var pair = rungs[item.Index];
+                pair.Selection = 1;
+            }
+            src_rungs.ResetBindings(false);
+            src_tags.ResetBindings(false);
+            //var list = dgv.DataSource;
+            //dgv.DataSource = null;
+            //dgv.DataSource = list;
+        }
+
+        private void acceptFromCompareToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DataGridView dgv = null;
+            switch (tabControl1.SelectedIndex)
+            {
+                case 0:
+                    dgv = dgv_rungs;
+                    break;
+                case 1:
+                    dgv = dgv_tags;
+                    break;
+                default:
+                    throw new Exception("Unexpected selection!");
+            }
+            foreach (DataGridViewRow item in dgv.SelectedRows)
+            {
+                var pair = (L5XPair)item.DataBoundItem;
+                pair.Selection = 2;
+            }
+            dgv.Refresh();
         }
     }
 }

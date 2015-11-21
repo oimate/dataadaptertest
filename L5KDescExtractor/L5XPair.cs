@@ -14,11 +14,19 @@ namespace L5KDescExtractor
             this.element = element;
             this.basefiledesc = basefiledesc;
             this.comparefiledesc = comparefiledesc;
+            this.selection = 0;
         }
-        private XElement element, basefiledesc, comparefiledesc;
-        public string Element { get { return GetElementAsString(); }}
+        public XElement element, basefiledesc, comparefiledesc;
+        public string Element { get { return GetElementAsString(); } }
         public string BaseFileDesc { get { return basefiledesc.Value; } }
         public string CompareFileDesc { get { return comparefiledesc.Value; } }
+
+        private int selection;
+        public int Selection
+        {
+            get { return selection; }
+            set { selection = value; }
+        }
 
         private string GetElementAsString()
         {
