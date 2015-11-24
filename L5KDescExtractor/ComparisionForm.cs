@@ -48,9 +48,25 @@ namespace L5KDescExtractor
 
         private void button2_Click(object sender, EventArgs e)
         {
+            foreach (var item in rungs)
+            {
+                if (item.Selection == 2)
+                {
+                    f1.ReplaceComment(item);
+                }
+            }
+
+            foreach (var item in tags)
+            {
+                if (item.Selection == 2)
+                {
+                    f1.ReplaceComment(item);
+                }
+            }
+
             if (f1 != null)
             {
-                //f1.XmlFile.Save("CT_319102_after.L5X");
+                f1.XmlFile.Save("CT_319102_after.L5X");
             }
         }
 

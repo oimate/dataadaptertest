@@ -36,7 +36,7 @@ namespace L5KDescExtractor
         private void bL5kFile_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "L5K files (*.L5K)|*.L5K";
+            ofd.Filter = "L5K files (*.L5K)|*.L5K|L5X files (*.L5X)|*.L5X";
             ofd.Multiselect = false;
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -48,14 +48,29 @@ namespace L5KDescExtractor
 
         private void ParseL5K(string filepath)
         {
-            string fileinmemory = File.ReadAllText(filepath);
-            tags = GetTags(fileinmemory);
-            estop = GetEstop(fileinmemory);
-            networks = GetNetworks(fileinmemory);
+            var ext = Path.GetExtension(filepath).ToUpper();
+            switch (ext)
+            {
+                case ".L5X":
+                    L5XFile f = new L5XFile(@"f:\users\PLRADSLI\Documents\Work\PROJECTS\ford kentucky\_SW\CT_319102_after.L5X");
+                    tags = GetTags(f);
+                    estop = GetEstop(f);
+                    networks = (from r in f.Rungs
+                                select r.Value).ToList();
+                    break;
+                case ".L5K":
+                    string fileinmemory = File.ReadAllText(filepath);
+                    tags = GetTags(fileinmemory);
+                    estop = GetEstop(fileinmemory);
+                    networks = GetNetworks(fileinmemory);
+                    break;
+                default:
+                    break;
+            }
             fltlist = GetFltList(networks);
             msglist = GetMsgList(networks);
             bitlist = GetBitList(networks);
-            ExportToFile(Path.GetDirectoryName(filepath), Path.GetFileNameWithoutExtension(filepath), ".xls");
+            ExportToFile(Path.GetDirectoryName(filepath), Path.GetFileNameWithoutExtension(filepath), ext + ".xls");
         }
         private void ExportToFile(string directory, string filenamenoext, string ext)
         {
@@ -108,6 +123,19 @@ namespace L5KDescExtractor
                 ret.AddRange(Parse_sf_OpBit16(network));
             }
             return ret;
+        }
+        private Dictionary<string, string> GetEstop(L5XFile fileinmemory)
+        {
+            var dict = new Dictionary<string, string>();
+            var estop = fileinmemory.Datatypes.First(d => d.FirstAttribute.Value == "ud_EStop");
+            var bits = estop.Descendants("Member").Where(m => m.Attribute("DataType").Value == "BIT").ToList();
+            foreach (var item in bits)
+            {
+                var desc = item.Element("Description").Value;
+                var name = item.FirstAttribute.Value;
+                dict.Add(name, desc);
+            }
+            return dict;
         }
         private Dictionary<string, string> GetEstop(string fileinmemory)
         {
@@ -364,6 +392,22 @@ namespace L5KDescExtractor
                 ret.Add(program.Value);
             }
             return ret;
+        }
+        private Dictionary<string, string> GetTags(L5XFile fileinmemory)
+        {
+            string name, description;
+            var dict = new Dictionary<string, string>();
+            foreach (var item in fileinmemory.Tags)
+            {
+                var desc = item.Element("Description");
+                if (desc != null)
+                {
+                    name = desc.Parent.FirstAttribute.Value;
+                    description = desc.Value;
+                    dict.Add(name, description);
+                }
+            }
+            return dict;
         }
         private Dictionary<string, string> GetTags(string fileinmemory)
         {

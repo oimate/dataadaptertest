@@ -89,6 +89,7 @@
             this.dgv_rungs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_rungs.Location = new System.Drawing.Point(3, 3);
             this.dgv_rungs.Name = "dgv_rungs";
+            this.dgv_rungs.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgv_rungs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_rungs.Size = new System.Drawing.Size(778, 495);
             this.dgv_rungs.TabIndex = 0;
@@ -136,6 +137,8 @@
             this.dgv_tags.Location = new System.Drawing.Point(3, 3);
             this.dgv_tags.Name = "dgv_tags";
             this.dgv_tags.ReadOnly = true;
+            this.dgv_tags.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dgv_tags.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_tags.Size = new System.Drawing.Size(778, 495);
             this.dgv_tags.TabIndex = 1;
             // 

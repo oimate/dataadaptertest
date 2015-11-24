@@ -129,19 +129,30 @@ namespace L5KDescExtractor
             }
         }
 
-        public void ReplaceComment(XElement element, XElement baseDescription, XElement compareDescription)
+        #region Utils
+        private static void log(Exception any)
+        {
+            log(any.Message);
+        }
+        private static void log(string p)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        internal void ReplaceComment(XElement element, XElement baseDescription, XElement compareDescription, int selection)
         {
             if (element.Name == "Tag" && baseDescription.Name == "Description" && compareDescription.Name == "Description")
             {
-                if (baseDescription.Parent == element)
+                if (baseDescription.Parent == element && selection == 2)
                 {
                     baseDescription.Remove();
                     element.AddFirst(compareDescription);
                 }
             }
-            if (element.Name != "Rung" && baseDescription.Name != "Comment" && compareDescription.Name != "Comment")
+            else if (element.Name == "Rung" && baseDescription.Name == "Comment" && compareDescription.Name == "Comment")
             {
-                if (baseDescription.Parent == element)
+                if (baseDescription.Parent == element && selection == 2)
                 {
                     baseDescription.Remove();
                     element.AddFirst(compareDescription);
@@ -153,15 +164,9 @@ namespace L5KDescExtractor
             }
         }
 
-        #region Utils
-        private static void log(Exception any)
+        internal void ReplaceComment(L5XPair item)
         {
-            log(any.Message);
+            ReplaceComment(item.element, item.basefiledesc, item.comparefiledesc, item.Selection);
         }
-        private static void log(string p)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
     }
 }

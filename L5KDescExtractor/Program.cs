@@ -16,7 +16,7 @@ namespace L5KDescExtractor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ComparisionForm());
+            Application.Run(new MainWindow());
         }
     }
 }
