@@ -52,7 +52,7 @@ namespace L5KDescExtractor
             switch (ext)
             {
                 case ".L5X":
-                    L5XFile f = new L5XFile(@"f:\users\PLRADSLI\Documents\Work\PROJECTS\ford kentucky\_SW\CT_319102_after.L5X");
+                    L5XFile f = new L5XFile(filepath);
                     tags = GetTags(f);
                     estop = GetEstop(f);
                     networks = (from r in f.Rungs
