@@ -43,7 +43,6 @@ namespace oiajf_gui
             await this.ShowMessageAsync("Job done!", "Rung and tags compared!");
 
             dupa.ItemsSource = tags;
-
         }
     }
 }

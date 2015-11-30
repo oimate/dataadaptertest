@@ -27,7 +27,7 @@
     </Controls:MetroWindow.RightWindowCommands>
     <Grid>
         <Button Click="Button_Click" Content="GO" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="75" Style="{DynamicResource MetroCircleButtonStyle}" FontFamily="Consolas" FontSize="30" FontWeight="SemiBold"/>
-        <DataGrid x:Name="dupa" HorizontalAlignment="Center" Margin="10,90,0,0" VerticalAlignment="Top"/>
+        <DataGrid x:Name="dupa" HorizontalAlignment="Center" VerticalAlignment="Top" MinWidth="400" Padding="10,0" Margin="0,100,0,0"/>
 
     </Grid>
 </Controls:MetroWindow>
